@@ -1,0 +1,437 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Project</title>
+
+    <!-- <link href="../static/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="../static/css/app.css" rel="stylesheet"> -->
+    <!-- <link href="../static/css/bootstrap-suggest.css" rel="stylesheet"> -->
+    <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
+    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/bootstrap-suggest.js"></script>
+    <script src="../static/js/app.js"></script>
+
+
+    <!-- <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300|Open+Sans:300|Oxygen|Material+Icons"
+        rel="stylesheet"> -->
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+            /* border: 0; */
+            padding: 0;
+            margin: 0;
+            color: #fff;
+        }
+
+        html {
+            background-color: #202124;
+            margin: 0;
+        }
+
+        .overlay {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            text-align: center;
+            display: none;
+            z-index: 1000 !important;
+            /* background: #ccc8; */
+        }
+
+        .spinner-border {
+            top: 50% !important;
+            position: absolute;
+        }
+
+        body>h2 {
+            text-align: center;
+            width: 100%;
+            background: #1462dc;
+            padding: 13px;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 30px;
+            line-height: 30px;
+            color: white;
+            font-family: monospace;
+        }
+
+        h3,
+        h4 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .input-group-text.positive {
+            background-color: #c5ffdb !important;
+        }
+
+        .input-group-text.negative {
+            background-color: #fddddd !important;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+
+        #max_paragraphs {
+            margin-top: 7px !important;
+        }
+
+        .suggestion {
+            min-height: 100vh;
+        }
+
+        .padding-top {
+            padding-top: 2rem;
+        }
+
+        .preds {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 10rem;
+            gap: 10px;
+        }
+
+        .preds>div {
+            width: 12rem;
+            height: 12rem;
+        }
+
+        .input-box {
+            margin-top: 10rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-col img {
+            margin-bottom: 1rem;
+        }
+
+        input {
+            border: none;
+            width: 100%;
+            background-color: #202124;
+            height: 3rem;
+            font-size: large;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+
+        .input-wrapper {
+            border: grey solid 1px;
+            border-radius: 999px;
+            /* padding: 10px 1rem; */
+            padding: 0 1rem;
+            width: 30rem;
+            cursor: text;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-wrapper>span {
+            margin-right: 10px;
+        }
+
+        .input-wrapper:hover,
+        .input-wrapper:hover>input {
+            background-color: #303134;
+            border-color: #303134;
+        }
+
+        .input-wrapper2>textarea {
+            border: none;
+            width: 30rem;
+            background-color: #303134;
+            border-radius: 999px;
+            font-size: large;
+            resize: none;
+            outline: none;
+            padding: 1rem 2rem;
+        }
+
+        textarea:read-only {
+            background-color: #202124;
+            color: white;
+            border: white solid 1px;
+            resize: none;
+            min-height: 10rem;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: .5rem 1rem;
+            border-radius: 5px;
+            border: transparent solid 1px;
+            background-color: #303134;
+        }
+
+        button:hover {
+            border: grey solid 1px;
+            cursor: pointer;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 2rem;
+            background-color: #171717;
+            font-size: large;
+            line-height: 1.5rem;
+        }
+
+        .footer-container *,
+        footer center p {
+            background-color: #171717;
+        }
+
+        .github {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        sub {
+            font-size: .7rem;
+        }
+    </style>
+
+</head>
+
+
+
+
+<body>
+    <!-- <div class="overlay">
+        <div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>
+    </div> -->
+    <h2> গ্রুপ 0x0f </h2>
+    <div class="row">
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-10">
+
+            <section class="suggestion">
+
+                <center>
+                    <h3>পরবর্তী শব্দের প্রস্তাব</h3>
+                </center>
+
+                <div class="input-box">
+                    <div class="input-col">
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <img src="../static/assets/logo2.png" alt="logo">
+                            </div>
+                            <!-- <div class="form-group col-md-4">
+                <br>
+                <label for="max_words" id="label_max_words">Top k words: 5</label>
+                <input type="range" class="custom-range" min="1" max="10" value="5" step="1" id="max_words">
+              </div> -->
+                        </div>
+                        <div class="form-row input-wrapper">
+                            <span>🔍</span>
+                            <input class="form-control txt_input" id="input_text"></input>
+                            <span>🎙️</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preds form-row">
+
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>আমাদের প্রশিক্ষিত মডেল</p>
+                            <sub>(ফাইন-টিউনড মিনিএলএম)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="text_our"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly></textarea>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>বাংলাবার্ট</p>
+                            <sub>(বি., অভিক এট আল, ২০২২)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="text_bb"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly></textarea>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>বাংলাবার্ট</p>
+                            <sub>(সাগর, ২০২০)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="text_bb2"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly></textarea>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>এক্সএলএম-রবার্টা</p>
+                            <sub>(কনেউ, এলেক্সিস এট আল, ২০১৯)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="text_xlm"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly></textarea>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>মিনি এলএম</p>
+                            <sub>(ওয়াং, ওয়েনহুই এট আল, ২০২০)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="text_minilm"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly></textarea>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>বার্ট বহুভাষিক</p>
+                            <sub>(ডেভ্লিন, জ্যাকব এট আল, ২০১৮)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="text_bert"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MASKED PREDICTION -->
+
+            <section class="suggestion">
+                <center>
+                    <h3 class="padding-top">শব্দ পূরণ</h3>
+                </center>
+
+                <div class="input-box">
+                    <div class="input-col">
+                        <h4>একটি বাক্য লিখুন এবং যে শব্দটি ভবিষ্যদ্বাণী করতে চান সেখানে &lt;mask&gt; লিখুন</h4>
+                        <!-- <div class="form-group col-md-2">
+                <br>
+                <label for="max_words" id="label_max_words">Top k words: 5</label>
+                <input type="range" class="custom-range" min="1" max="10" value="5" step="1" id="max_words_mask">
+              </div> -->
+                        <div class="form-row input-wrapper2">
+                            <textarea class="form-control txt_input" id="mask_input_text" rows="3"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id="btn-process">ভবিষ্যদ্বাণী
+                            করুন</button>
+                    </div>
+                </div>
+
+                <div class="preds form-row">
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>আমাদের প্রশিক্ষিত মডেল</p>
+                            <sub>(ফাইন-টিউনড মিনিএলএম)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="mask_text_our"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly rows="1"></textarea>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>বাংলাবার্ট</p>
+                            <sub>(বি., অভিক এট আল, ২০২২)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="mask_text_bb"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly></textarea>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>বাংলাবার্ট</p>
+                            <sub>(সাগর, ২০২০)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="mask_text_bb2"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly></textarea>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>এক্সএলএম-রবার্টা</p>
+                            <sub>(কনেউ, এলেক্সিস এট আল, ২০১৯)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="mask_text_xlm"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly></textarea>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>মিনিএলএম</p>
+                            <sub>(ওয়াং, ওয়েনহুই এট আল, ২০২০)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="mask_text_minilm"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly></textarea>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="text_paragraphs">
+                            <p>বার্ট বহুভাষিক</p>
+                            <sub>(ডেভ্লিন, জ্যাকব এট আল, ২০১৮)</sub>
+                        </label>
+                        <textarea class="form-control txt_response" id="mask_text_bert"
+                            placeholder="শব্দের প্রস্তাবগুলো এখানে দেখাবে..." readonly></textarea>
+                    </div>
+
+                </div>
+            </section>
+
+
+
+        </div>
+
+        <div class="col-sm-1"></div>
+    </div>
+</body>
+
+<footer>
+
+    <div class="footer-container">
+        <div class="footer-text">
+            <h2>গ্রুপ 0x0f</h2>
+            <p>মেশিন লার্নিং</p>
+            <p>সেকশন A</p>
+            <p>গ্রীষ্ম ২১-২২</p>
+        </div>
+
+        <div class="github">
+            <img src="../static/assets/qrcode_github.com.png" alt="qrcode_github" width="150px">
+            <a href="https://github.com/SaminYaser-work/ML-Course">হাবের গিট</a>
+        </div>
+
+    </div>
+    <center>
+        <p>&copy; ২০২২ কোন অধিকার সংরক্ষিত নেই</p>
+    </center>
+</footer>
+
+</html>
