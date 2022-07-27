@@ -9,7 +9,6 @@ import string
 
 
 # বাংলাবার্ট (বুয়েট)
-# bb_path = "Models/banglabert-generator"
 bb_path = "csebuetnlp/banglabert_generator"
 
 bb_model = AutoModelForMaskedLM.from_pretrained(bb_path)
