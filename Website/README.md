@@ -1,4 +1,4 @@
-# Next word prediction
+# 🅱️oogle
 Simple application using transformers models to predict next word or a masked word in a sentence.
 
 The purpose is to demo and compare the main models available up to date.
@@ -11,14 +11,12 @@ This app implements two variants of the same task (predict <mask> token). The fi
 The second variant is necessary to include a <mask> token where you want the model to predict the word.
 
 
-![Word prediction](word_prediction.gif)
-
 ### Running 
 
 ```
-cd web-app
 python app.py
 ```
+> More than 8 GB of RAM is reccommended to run this application.
 
 Open your browser http://localhost:8000
 
