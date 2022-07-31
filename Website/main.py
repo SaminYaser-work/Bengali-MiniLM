@@ -36,7 +36,9 @@ xlmroberta_model = XLMRobertaForMaskedLM.from_pretrained(
 
 # আমাদের মডেল
 wiki_model = AutoModelForMaskedLM.from_pretrained(
-    '../Models/Multilingual-MiniLM-L12-H384-MLM-finetuned-wikipedia_bn')
+    'f00d/Multilingual-MiniLM-L12-H384-MLM-finetuned-wikipedia_bn')
+# wiki_model = AutoModelForMaskedLM.from_pretrained(
+#     '../Models/Multilingual-MiniLM-L12-H384-MLM-finetuned-wikipedia_bn')
 wiki_fill_mask = pipeline(
     "fill-mask",
     model=wiki_model,
